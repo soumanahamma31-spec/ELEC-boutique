@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101820">
+<meta name="description" content="ELEC — téléphones et accessoires électroniques, livraison partout au Niger.">
+<title>ELEC | Boutique électronique</title>
+<style>
+:root{--ink:#101820;--gold:#f6b51b;--paper:#f5f7fa;--muted:#657080;--line:#e5e9ef}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--paper);color:var(--ink)}
+header{background:var(--ink);color:white;padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.35rem;letter-spacing:1px}.bolt{background:var(--gold);color:var(--ink);border-radius:12px;padding:9px 12px}
+header button,.primary{border:0;background:var(--gold);color:var(--ink);font-weight:800;padding:11px 15px;border-radius:12px;cursor:pointer}
+.hero{background:linear-gradient(130deg,#101820,#233649);color:white;padding:48px 5% 42px;display:grid;grid-template-columns:1.4fr 1fr;align-items:center;gap:24px}
+.hero h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.05;margin:0 0 14px}.hero p{color:#d3dbe4;max-width:580px;line-height:1.65}.hero .pill{display:inline-block;background:#2e4050;border:1px solid #45596b;border-radius:99px;padding:7px 12px;font-size:.85rem;margin-bottom:15px}
+.hero-art{min-height:190px;display:grid;place-items:center;font-size:clamp(6rem,16vw,10rem);filter:drop-shadow(0 15px 15px #0005)}
+main{max-width:1150px;margin:auto;padding:28px 5% 55px}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}.sectionhead h2{margin:0 0 6px}.muted{color:var(--muted);font-size:.95rem}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.filters button{border:1px solid var(--line);background:white;padding:9px 13px;border-radius:999px;cursor:pointer}.filters button.active{background:var(--ink);color:white}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.product{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}.product .photo{height:155px;background:#edf1f5;display:grid;place-items:center;font-size:4rem}.product .info{padding:15px;display:flex;flex-direction:column;gap:8px;flex:1}.product h3{font-size:1rem;margin:0}.price{font-size:1.12rem;font-weight:850}.product small{color:var(--muted);line-height:1.4}.product button{margin-top:auto;width:100%}
+.notice{margin-top:26px;padding:16px;border:1px solid #f2d58a;background:#fff8e4;border-radius:14px;color:#5e4a18;font-size:.9rem}
+footer{background:var(--ink);color:#d3dbe4;padding:26px 5%;text-align:center;font-size:.9rem}
+.modalback{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:end;justify-content:center}.modalback.show{display:flex}.modal{background:white;width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding:22px}.modalhead{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#edf1f5;border-radius:50%;width:38px;height:38px;font-size:1.2rem}
+.cartline{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.cartline button{border:0;background:none;color:#b42318;cursor:pointer}
+label{font-weight:700;font-size:.9rem;display:block;margin:13px 0 6px}input,select,textarea{width:100%;padding:12px;border:1px solid #ccd3dd;border-radius:10px;font:inherit}textarea{min-height:70px}
+.empty{padding:20px;text-align:center;color:var(--muted)}
+@media(max-width:750px){.hero{grid-template-columns:1fr;padding-top:34px}.hero-art{min-height:100px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product .photo{height:125px}}
+@media(max-width:430px){.grid{grid-template-columns:1fr 1fr;gap:10px}.product .photo{height:105px;font-size:3rem}.product .info{padding:11px}.product h3{font-size:.92rem}.price{font-size:1rem}.hero h1{font-size:2.4rem}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="bolt">ϟ</span><span>ELEC</span></div>
+  <button onclick="openCart()">🛒 Panier <span id="cartCount">0</span></button>
+</header>
+<section class="hero">
+  <div>
+    <span class="pill">📦 Livraison partout au Niger</span>
+    <h1>La technologie<br>à portée de main.</h1>
+    <p>Découvre des téléphones et accessoires électroniques. Choisis tes articles et envoie ta commande directement à ELEC sur WhatsApp.</p>
+    <button class="primary" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">Découvrir les produits ↓</button>
+  </div>
+  <div class="hero-art" aria-hidden="true">📱 🎧</div>
+</section>
+<main id="catalogue">
+  <div class="sectionhead"><div><h2>Notre catalogue</h2><div class="muted">Prix de démonstration à remplacer avant la mise en vente.</div></div></div>
+  <div class="filters" id="filters">
+    <button class="active" data-cat="Tous">Tout</button><button data-cat="Téléphones">Téléphones</button><button data-cat="Accessoires">Accessoires</button><button data-cat="Audio">Audio</button>
+  </div>
+  <div class="grid" id="products"></div>
+  <div class="notice"><strong>Important :</strong> les produits et prix ci-dessous sont des exemples. Remplace-les par tes vrais articles, prix et disponibilités avant de partager la boutique avec des clients. Le paiement en ligne n'est pas activé : les commandes sont envoyées sur WhatsApp.</div>
+</main>
+<footer><strong>ELEC</strong> · Téléphones et accessoires électroniques<br>Livraison dans tout le Niger · Contact WhatsApp : +227 98 83 74 28</footer>
+<div class="modalback" id="cartModal" onclick="if(event.target===this)closeCart()">
+  <div class="modal">
+    <div class="modalhead"><h2>Ton panier</h2><button class="close" onclick="closeCart()">×</button></div>
+    <div id="cartItems"></div>
+    <div class="cartline"><strong>Total estimé</strong><strong id="cartTotal">0 FCFA</strong></div>
+    <h3>Informations de livraison</h3>
+    <label for="customerName">Nom complet</label><input id="customerName" placeholder="Ton nom">
+    <label for="customerPhone">Téléphone</label><input id="customerPhone" type="tel" placeholder="Ex. +227 ...">
+    <label for="city">Ville / localité</label><input id="city" placeholder="Ex. Niamey, Maradi, Zinder...">
+    <label for="address">Adresse ou point de repère</label><textarea id="address" placeholder="Quartier, rue ou point de repère"></textarea>
+    <label for="payment">Mode de paiement souhaité</label>
+    <select id="payment"><option>Paiement à la livraison (à confirmer)</option><option>Transfert mobile money (à convenir)</option><option>Autre (à convenir)</option></select>
+    <p class="muted">L'envoi ouvre WhatsApp avec le récapitulatif. ELEC devra confirmer le stock, les frais et le délai de livraison.</p>
+    <button class="primary" style="width:100%" onclick="checkout()">Envoyer la commande sur WhatsApp</button>
+  </div>
+</div>
+<script>
+const WHATSAPP_NUMBER = "22798837428";
+const products = [
+ {id:1,name:"Smartphone Android",cat:"Téléphones",price:65000,emoji:"📱",desc:"Exemple de fiche produit — indique la marque et le modèle réel."},
+ {id:2,name:"Téléphone 4G",cat:"Téléphones",price:45000,emoji:"📲",desc:"Exemple de fiche produit — prix à remplacer."},
+ {id:3,name:"Écouteurs sans fil",cat:"Audio",price:8000,emoji:"🎧",desc:"Écouteurs Bluetooth — modèle à préciser."},
+ {id:4,name:"Chargeur USB-C",cat:"Accessoires",price:5000,emoji:"🔌",desc:"Chargeur — puissance et compatibilité à préciser."},
+ {id:5,name:"Batterie externe",cat:"Accessoires",price:12000,emoji:"🔋",desc:"Power bank — capacité à préciser."},
+ {id:6,name:"Coque de téléphone",cat:"Accessoires",price:2500,emoji:"📱",desc:"Coque — ajoute les modèles compatibles."}
+];
+let cart = {};
+const money = n => new Intl.NumberFormat("fr-FR").format(n)+" FCFA";
+function renderProducts(cat="Tous"){
+ const shown = products.filter(p=>cat==="Tous"||p.cat===cat);
+ document.getElementById("products").innerHTML=shown.map(p=>`<article class="product"><div class="photo">${p.emoji}</div><div class="info"><h3>${p.name}</h3><small>${p.desc}</small><div class="price">${money(p.price)}</div><button class="primary" onclick="addToCart(${p.id})">Ajouter au panier</button></div></article>`).join("");
+}
+document.getElementById("filters").addEventListener("click",e=>{if(e.target.dataset.cat){document.querySelectorAll(".filters button").forEach(b=>b.classList.toggle("active",b===e.target));renderProducts(e.target.dataset.cat)}});
+function addToCart(id){cart[id]=(cart[id]||0)+1;updateCart();document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0)}
+function updateCart(){
+ const items=Object.entries(cart).filter(([id,q])=>q>0).map(([id,q])=>({p:products.find(p=>p.id===Number(id)),q}));
+ document.getElementById("cartItems").innerHTML=items.length?items.map(({p,q})=>`<div class="cartline"><div><strong>${p.name}</strong><br><small>${money(p.price)} × ${q}</small><br><button onclick="changeQty(${p.id},-1)">−</button> ${q} <button onclick="changeQty(${p.id},1)">+</button></div><strong>${money(p.price*q)}</strong></div>`).join(""):'<div class="empty">Ton panier est vide. Ajoute un produit pour commencer.</div>';
+ document.getElementById("cartTotal").textContent=money(items.reduce((s,{p,q})=>s+p.price*q,0));
+ document.getElementById("cartCount").textContent=items.reduce((s,{q})=>s+q,0);
+}
+function changeQty(id,d){cart[id]=Math.max(0,(cart[id]||0)+d);if(!cart[id])delete cart[id];updateCart()}
+function openCart(){updateCart();document.getElementById("cartModal").classList.add("show")}
+function closeCart(){document.getElementById("cartModal").classList.remove("show")}
+function checkout(){
+ const items=Object.entries(cart).filter(([id,q])=>q>0).map(([id,q])=>({p:products.find(p=>p.id===Number(id)),q}));
+ if(!items.length){alert("Ton panier est vide.");return}
+ const name=document.getElementById("customerName").value.trim(), phone=document.getElementById("customerPhone").value.trim(), city=document.getElementById("city").value.trim(), address=document.getElementById("address").value.trim(), payment=document.getElementById("payment").value;
+ if(!name||!phone||!city){alert("Merci de renseigner ton nom, ton téléphone et ta ville.");return}
+ const total=items.reduce((s,{p,q})=>s+p.price*q,0);
+ const message=`Bonjour ELEC, je souhaite commander :\n\n${items.map(({p,q})=>`• ${p.name} × ${q} = ${money(p.price*q)}`).join("\n")}\n\nTotal estimé des produits : ${money(total)}\nNom : ${name}\nTéléphone : ${phone}\nVille : ${city}\nAdresse / repère : ${address||"À préciser"}\nPaiement souhaité : ${payment}\n\nMerci de confirmer la disponibilité, les frais et le délai de livraison.`;
+ window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,"_blank");
+}
+renderProducts();updateCart();
+</script>
+</body>
+</html>
